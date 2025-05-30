@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH --partition=batch
-#SBATCH --job-name=variant_calling
+#SBATCH --job-name=sum_stats
 #SBATCH --ntasks=1
 #SBATCH --time=2:00:00
 #SBATCH --mem=2gb
@@ -27,7 +27,7 @@ do
 	lines=$(zcat $file | wc -l)
 	read_count=$((lines / 4))
 
-	echo "$sample,raw,$read_count" >> results/summary_stats.csv
+	echo "$sample,Raw,$read_count" >> results/summary_stats.csv
 done
 
 
@@ -38,16 +38,16 @@ do
 	echo "Counting reads for $sample"
 	lines=$(zcat $file | wc -l)
 	read_count=$((lines / 4))
-	echo "$sample,trimmed,$read_count" >> results/summary_stats.csv
+	echo "$sample,Trimmed,$read_count" >> results/summary_stats.csv
 done
 
 # Count the number of reads that aligned to the genome
 for file in results/bam/*.sorted.bam
 do
 	sample=$(basename $file .sorted.bam) # Extract the sample name
-	echo "Counting mapped reads for $sample"
-	mapped_count=$(samtools view -F 0x4 $file | wc -l)
-	echo "$sample,mapped,$mapped_count" >> results/summary_stats.csv
+	echo "Counting aligned reads for $sample"
+	mapped_count=$(samtools view -F 0x4 $file | cut -f 1 | sort | uniq | wc -l)
+	echo "$sample,Aligned,$mapped_count" >> results/summary_stats.csv
 done
 
 # Count the number of variant sites in each sample
@@ -56,5 +56,5 @@ do
         sample=$(basename $file .vcf) # Extract the sample name
         echo "Counting variants for $sample"
         variants=$(grep -v '#' $file | wc -l)
-        echo "$sample,variants,$variants" >> results/summary_stats.csv
+        echo "$sample,Variants,$variants" >> results/summary_stats.csv
 done
