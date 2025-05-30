@@ -1,3 +1,13 @@
+#!/bin/bash
+#SBATCH --partition=batch
+#SBATCH --job-name=variant_calling
+#SBATCH --ntasks=1
+#SBATCH --time=2:00:00
+#SBATCH --mem=2gb
+#SBATCH --mail-type=END,FAIL
+#SBATCH --mail-user=ec50513@uga.edu
+
+
 # Script of the summary statistics for e. coli analysis
 
 # Load required modules
