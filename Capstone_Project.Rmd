@@ -1,0 +1,52 @@
+---
+title: "Capstone Project Report"
+author: "Emma Chandler"
+date: "2025-05-30"
+output: html_document
+---
+
+# Project Goal
+
+The goal of this project was to map sequences from e. coli samples to the e. coli Genome and analyze the number of variant sites that differ between the samples and genomes.
+
+## Link to GitHub Repository with scripts and summary statistic data
+https://github.com/echandle2228/BINF8960_Capstone
+
+## Analysis of summary statistics from Genomic pipeline
+
+Load Data and Packages
+```{r}
+# Load Packages
+library(tidyverse)
+
+# Load data
+stats <- read.csv("results/summary_stats.csv", header = TRUE)
+
+```
+
+Make Plots using summary statistics data
+```{r}
+# Plot showing read counts
+stats %>% 
+  filter(read_type != "variants") %>%
+  ggplot() +
+  aes(x = read_type, y = count, 
+      group = sample,
+      color = sample) +
+  geom_line() +
+  theme_classic() +
+  labs(x = "", y = "Read Counts", color = "Sample") +
+  theme(axis.text.x = element_text(angle = -45, hjust = 0, vjust = 0))
+
+# Plot a bar chart of variants
+stats %>% 
+  filter(read_type == "variants") %>%
+  ggplot() +
+  aes(x = sample, y = count) +
+  geom_col() +
+  theme_classic() +
+  labs(x = "Sample", y = "Variants") 
+
+
+```
+
