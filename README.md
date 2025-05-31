@@ -1,4 +1,5 @@
 # Capstone Project for BINF8960 Genomics for Beginners
+
 ### Genomics Pipeline
 - Project setup (setup.sh)
 - Run Quality Control (QC_Trim.sh)
@@ -7,4 +8,11 @@
 - Call variants in the aligned reads (variant_calling.sh)
 - Get the read counts and number of variants (summary_stats.sh)
 - Script to run full pipeline (batch.sh)
-- Project Report (Capstone_Project.Rmd and Capstone_Project.pdf)
+
+### Files
+- data - quality control output files for raw and trimmed reads
+- results - csv file with the summary_statistics
+
+### Analysis
+- Capstone_Project.pdf - Project Report with write-up and analyses
+- Capstone_Project.Rmd - R mark down file of Project Report
